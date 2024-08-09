@@ -1,0 +1,2421 @@
+{
+	"info": {
+		"_postman_id": "544cc1e7-f8fe-47c7-b34c-1397a7b47fd0",
+		"name": "Group assignment - Daniel's Team FINAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36967018"
+	},
+	"item": [
+		{
+			"name": "1. POST /challenger (201)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let challenger = pm.response.headers.get('X-Challenger');\r",
+							"pm.collectionVariables.set('X-Challenger', challenger);\r",
+							"\r",
+							"pm.test(\"Status code is 201 - a challenger is created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/challenger",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"challenger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. GET /challenges (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/challenges",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"challenges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. GET /todos (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let todoId = Math.floor(Math.random() * 10) + 1;                // we get a random number from 1 to 10\r",
+							"pm.collectionVariables.set('todoId', todoId);                   // and save it in collection as todoId variable\r",
+							"\r",
+							"let todoWrongId = Math.floor(Math.random() * 100) + 11;         // we get a random number from 11 to 111\r",
+							"pm.collectionVariables.set('todoWrongId', todoWrongId);         // and save it in collection as todoWrongId variable\r",
+							"\r",
+							"pm.test(\"Status code is 200; We get the list of todos\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. GET /todo (404) not plural",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todo",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. GET /todos/{id} (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. GET /todos/{id} (404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoWrongId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoWrongId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. HEAD /todos (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should have no body\", function () {\r",
+							"    pm.expect(pm.response.text()).to.have.lengthOf(0);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "HEAD",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. POST /todos (201)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201. We created a todo with doneStatus=true \", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"{{$randomLoremWords}}\",\r\n    \"doneStatus\": true,\r\n    \"description\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. GET /todos (200) ?filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Parameter doneStatus is true\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.todos[0].doneStatus).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos?doneStatus=true",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					],
+					"query": [
+						{
+							"key": "doneStatus",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. POST /todos (400) doneStatus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"title\": \"{{$randomWords}}\",\r\n            \"doneStatus\": {{$randomWord}},\r\n            \"description\": \"\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. POST /todos (400) title too long",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"//below we define a constant variable to which we want to compare the error message from the response\r",
+							"const expectedErrorMessage = \"Failed Validation: Maximum allowable length exceeded for title - maximum allowed is 50\"; \r",
+							"\r",
+							"//below we check that the error message from response matches the expected value \"expectedErrorMessage\"\r",
+							"pm.test(\"Correct error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"    pm.expect(responseBody.errorMessages).to.be.an(\"array\").that.includes(expectedErrorMessage);\r",
+							"});\r",
+							"//and lastly a simple test to confirm that the status is 400 - as it should be here\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"{{$randomLoremParagraphs}}\",\r\n    \"doneStatus\": false,\r\n    \"description\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12. POST /todos (400) description too long",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"//below we define a constant variable to which we want to compare the error message from the response\r",
+							"const expectedErrorMessage = \"Failed Validation: Maximum allowable length exceeded for description - maximum allowed is 200\"; \r",
+							"\r",
+							"//below we check that the error message from response matches the expected value \"expectedErrorMessage\"\r",
+							"pm.test(\"Correct error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"    pm.expect(responseBody.errorMessages).to.be.an(\"array\").that.includes(expectedErrorMessage);\r",
+							"});\r",
+							"//and lastly a simple test to confirm that the status is 400 - as it should be here\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"{{$randomLoremWord}}\",\r\n    \"doneStatus\": {{$randomBoolean}},\r\n    \"description\": \"{{$randomLoremParagraphs}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13. POST /todos (201) max out content",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"01234567890123456789012345678901234567890123456789\", // 5x 0123456789 for a total of 50 characters\r\n    \"doneStatus\": false,\r\n    \"description\": \"01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789\" //20x 0123456789 for a total of 200 characters\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14. POST /todos (413) content too long",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"//below we define a constant variable to which we want to compare the error message from the response\r",
+							"const expectedErrorMessage = \"Error: Request body too large, max allowed is 5000 bytes\"; \r",
+							"\r",
+							"//below we check that the error message from response matches the expected value \"expectedErrorMessage\"\r",
+							"pm.test(\"Correct error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"    pm.expect(responseBody.errorMessages).to.be.an(\"array\").that.includes(expectedErrorMessage);\r",
+							"});\r",
+							"//and lastly a simple test to confirm that the status is 413 - as it should be here\r",
+							"pm.test(\"Status code is 413 - Payload Too Large\", function () {\r",
+							"    pm.response.to.have.status(413);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"title\": \"{{$randomLoremWord}}\",\r\n            \"doneStatus\": false,\r\n            \"description\": \"{{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}} {{$randomLoremParagraphs}}\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15. POST /todos (400) extra",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"pm.test(\"error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"{{$randomLoremWords}}\": \"{{$randomLoremWords}}\",\r\n            \"title\": \"{{$randomLoremWords}}\",\r\n            \"doneStatus\": {{$randomBoolean}},\r\n            \"description\": \"\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16. PUT /todos/{id} (400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"//below we define a constant variable to which we want to compare the error message from the response\r",
+							"const expectedErrorMessage = \"Cannot create todo with PUT due to Auto fields id\"; \r",
+							"\r",
+							"//below we check that the error message from response matches the expected value \"expectedErrorMessage\"\r",
+							"pm.test(\"Correct error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"    pm.expect(responseBody.errorMessages).to.be.an(\"array\").that.includes(expectedErrorMessage);\r",
+							"});\r",
+							"//and lastly a simple test to confirm that the status is 400 - as it should be here\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"id\": 2,\r\n            \"title\": \"{{$randomLoremWord}}\",\r\n            \"doneStatus\": false,\r\n            \"description\": \"\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoWrongId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoWrongId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17. POST /todos/{id} (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{todoId}},\r\n    \"title\": \"{{$randomLoremWords}}}}\",\r\n    \"doneStatus\": {{$randomBoolean}},\r\n    \"description\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18. POST /todos/{id} (404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"pm.test(\"error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{todoWrongId}},\r\n    \"title\": \"{{$randomLoremWords}}\",\r\n    \"doneStatus\": {{$randomBoolean}},\r\n    \"description\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoWrongId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoWrongId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "19. PUT /todos/{id} full (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{todoId}},\r\n    \"title\": \"{{$randomLoremWords}}\",\r\n    \"doneStatus\": {{$randomBoolean}},\r\n    \"description\": \"{{$randomLoremWords}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "20. PUT /todos/{id} partial (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{todoId}},\r\n    \"title\": \"{{$randomLoremWords}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "21. PUT /todos/{id} no title (400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"let responseBody = pm.response.json();\r",
+							"const expectedErrorMessage = \"title : field is mandatory\"; \r",
+							"\r",
+							"pm.test(\"Correct error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"    pm.expect(responseBody.errorMessages).to.be.an(\"array\").that.includes(expectedErrorMessage);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"id\": {{todoId}},\r\n            \"doneStatus\": false,\r\n            \"description\": \"\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "22. PUT /todos/{id} no amend id (400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"let responseBody = pm.response.json();\r",
+							"const expectedErrorMessage = `Can not amend id from ${pm.collectionVariables.get('todoId')} to ${pm.collectionVariables.get('todoWrongId')}`;\r",
+							"\r",
+							"pm.test(\"Correct error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"    pm.expect(responseBody.errorMessages).to.be.an(\"array\").that.includes(expectedErrorMessage);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{todoWrongId}},\r\n    \"title\": \"{{$randomLoremWords}}\",\r\n    \"doneStatus\": false,\r\n    \"description\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "23. DELETE /todos/{id} (200)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos/{{todoId}}",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos",
+						"{{todoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "24. OPTIONS /todos (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Allow header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Allow\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Access-Control-Allow-Origin header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Access-Control-Allow-Headers header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Headers\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "25. GET /todos (200) XML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type should be application/xml\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/xml\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "26. GET /todos (200) JSON",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type should be application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "27. GET /todos (200) ANY",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Request should have Accept header\", function () {\r",
+							"    pm.request.to.have.header(\"Accept\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header should be */*\", function () {\r",
+							"    pm.expect(pm.request.headers.get(\"Accept\")).to.equal(\"*/*\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "28. GET /todos (200) XML pref",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Request should have Accept header\", function () {\r",
+							"    pm.request.to.have.header(\"Accept\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header should be application/xml, application/json\", function () {\r",
+							"    pm.expect(pm.request.headers.get(\"Accept\")).to.equal(\"application/xml, application/json\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml, application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "29. GET /todos (200) no accept",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Request should have Accept header\", function () {\r",
+							"    pm.request.to.have.header(\"Accept\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header should be empty\", function () {\r",
+							"    pm.expect(pm.request.headers.get(\"Accept\")).to.equal(\"\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "30. GET /todos (406)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 406\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});\r",
+							"\r",
+							"let responseBody = pm.response.json();\r",
+							"const expectedErrorMessage = \"Unrecognised Accept Type\"; \r",
+							"\r",
+							"pm.test(\"Correct error message received\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"errorMessages\");\r",
+							"    pm.expect(responseBody.errorMessages).to.be.an(\"array\").that.includes(expectedErrorMessage);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/gzip",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "48. POST /secret/token (401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Response authorization username/password is not 'admin'/'password'\", function () {",
+							"    let auth = pm.request.auth;",
+							"",
+							"    if (auth.type === \"basic\") {",
+							"        let username = auth.basic.find(item => item.key === \"username\").value;",
+							"        let password = auth.basic.find(item => item.key === \"password\").value;",
+							"        console.log(\"username\", username);",
+							"        console.log(\"pass\", password);",
+							"        pm.expect(username).to.not.equal('admin');",
+							"        pm.expect(password).to.not.equal('password');",
+							"    } else {",
+							"        // Handle cases where the auth type or structure is not as expected",
+							"        console.log(\"Auth type is not 'basic' or structure is not as expected\");",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "test",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/token",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "49. POST /secret/token (201)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							" ",
+							"pm.test(\"Response authorization username/password is 'admin'/'password'\", function () {",
+							"    let auth = pm.request.auth;",
+							"",
+							"    if (auth.type === \"basic\") {",
+							"        let username = auth.basic.find(item => item.key === \"username\").value;",
+							"        let password = auth.basic.find(item => item.key === \"password\").value;",
+							"        console.log(\"username\", username);",
+							"        console.log(\"pass\", password);",
+							"        pm.expect(username).to.equal('admin');",
+							"        pm.expect(password).to.equal('password');",
+							"    } else {",
+							"        // Handle cases where the auth type or structure is not as expected",
+							"        console.log(\"Auth type is not 'basic' or structure is not as expected\");",
+							"    }",
+							"});",
+							"",
+							"",
+							"let tempToken = pm.response.headers.get('X-Auth-Token');",
+							"",
+							"// save the value of X-Auth-Token as variable",
+							"pm.collectionVariables.set('X-Auth-Token',tempToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/token",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "50. GET /secret/note (403)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"X-AUTH-TOKEN is equal to 123\", function () {",
+							"    var authToken = pm.request.headers.get('X-AUTH-TOKEN');",
+							"    pm.expect(authToken).to.eql('123');",
+							"    console.log(authToken);",
+							"});",
+							"",
+							"pm.test(\"X-AUTH-TOKEN does not match a valid token\", function () {",
+							"    pm.expect(pm.request.headers.get('')).not.to.eql(pm.collectionVariables.get('X-Auth-Token'));",
+							"    console.log(pm.collectionVariables.get('X-Auth-Token'))",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "123",
+						"type": "text"
+					},
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "51. GET /secret/note (401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "52. GET /secret/note (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"let noteValue = jsonData.note;",
+							"pm.collectionVariables.set(\"noteValue\", noteValue);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response body contains the note\", function () {",
+							"    pm.expect(jsonData).to.have.property('note');",
+							"});",
+							"",
+							"pm.test(\"X-AUTH-TOKEN matches a valid token\", function () {",
+							"    pm.expect(pm.request.headers.get('X-AUTH-TOKEN')).to.eql(pm.collectionVariables.get('X-Auth-Token'));",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "53. POST /secret/note (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has a 'note' payload\", function () {",
+							"    pm.expect(pm.response.json()).to.have.property('note');",
+							"});",
+							"",
+							"let noteValue = pm.collectionVariables.get(\"noteValue\");",
+							"let jsonData = pm.response.json();",
+							"let noteChangedValue = jsonData.note;",
+							"",
+							"pm.test(\"Note has changed correctly\", function () {",
+							"    pm.expect(noteChangedValue).to.not.eql(noteValue);",
+							"    console.log(noteValue);",
+							"    console.log(noteChangedValue);",
+							"});",
+							"",
+							"pm.test(\"Note length is maximum 100 characters\", function () {",
+							"    const responseJson = pm.response.json();",
+							"    const note = responseJson.note;",
+							"    ",
+							"    pm.expect(note).to.not.be.undefined;",
+							"    pm.expect(note.length).to.be.at.most(100);",
+							"});",
+							"",
+							"pm.test(\"X-AUTH-TOKEN matches a valid token\", function () {",
+							"    pm.expect(pm.request.headers.get('X-AUTH-TOKEN')).to.eql(pm.collectionVariables.get('X-Auth-Token'));",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"noteValue\", noteChangedValue);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"note\": \"{{$randomLoremWords}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "54. POST /secret/note (401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Request has a 'note' payload\", function () {",
+							"    let requestBody = JSON.parse(pm.request.body.raw);",
+							"    pm.expect(requestBody).to.have.property('note');",
+							"    console.log(requestBody);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"note\": \"my note\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				},
+				"description": "\nThis endpoint allows you to create a secret note by sending an HTTP POST request to the specified URL. The request should include a payload with a \"note\" key. The value for the \"note\" key should be the content of the secret note you want to create.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "55. POST /secret/note (403)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Request has a 'note' payload\", function () {",
+							"    let requestBody = JSON.parse(pm.request.body.raw);",
+							"    pm.expect(requestBody).to.have.property('note');",
+							"    console.log(requestBody);",
+							"});",
+							"",
+							"pm.test(\"X-AUTH-TOKEN does not match a valid token\", function () {",
+							"    pm.expect(pm.request.headers.get('X-AUTH-TOKEN')).not.to.eql(pm.collectionVariables.get('X-Auth-Token'));",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "123",
+						"type": "text"
+					},
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"note\": \"my note\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "56. GET /secret/note (Bearer)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let noteValue = pm.collectionVariables.get(\"noteValue\");",
+							"let jsonData = pm.response.json();",
+							"let noteResponseValue = jsonData.note;",
+							"pm.test(\"Response has correct 'note' value\", function () {",
+							"    pm.expect(noteResponseValue).to.eql(noteValue);",
+							"    console.log(noteResponseValue);",
+							"    console.log(noteValue);",
+							"});",
+							"",
+							"pm.test(\"Authorization Bearer token matches X-AUTH-TOKEN\", function () {",
+							"    pm.expect(pm.request.headers.get('Authorization')).to.eql(\"Bearer \" + pm.collectionVariables.get('X-Auth-Token'));",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{X-Auth-Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "57. POST /secret/note (Bearer)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let noteValue = pm.collectionVariables.get(\"noteValue\");",
+							"let jsonData = pm.response.json();",
+							"let noteChangedValue = jsonData.note;",
+							"",
+							"pm.test(\"Note has changed correctly\", function () {",
+							"    pm.expect(noteChangedValue).to.not.eql(noteValue);",
+							"    console.log(noteValue);",
+							"    console.log(noteChangedValue);",
+							"});",
+							"pm.collectionVariables.set(\"noteValue\", noteChangedValue);",
+							"",
+							"pm.test(\"Note length is maximum 100 characters\", function () {",
+							"    const responseJson = pm.response.json();",
+							"    const note = responseJson.note;",
+							"    ",
+							"    pm.expect(note).to.not.be.undefined;",
+							"    pm.expect(note.length).to.be.at.most(100);",
+							"});",
+							"",
+							"pm.test(\"Authorization Bearer token matches X-AUTH-TOKEN\", function () {",
+							"    pm.expect(pm.request.headers.get('Authorization')).to.eql(\"Bearer \" + pm.collectionVariables.get('X-Auth-Token'));",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{X-Auth-Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"note\": \"{{$randomLoremWords}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/secret/note",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"secret",
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "58. OPTIONAL. DELETE /todos/{id} (200) all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const allTodos = pm.response.json().todos;",
+							"const challenger = pm.request.headers.get('X-Challenger');",
+							"",
+							"//Here we start a loop that goes through all the todos and delete them one by one.",
+							"allTodos.forEach(todo => { ",
+							"   const deleteRequest = {",
+							"        url: `https://apichallenges.herokuapp.com/todos/${todo.id}`,",
+							"        method: 'DELETE',",
+							"        header: {",
+							"            'X-Challenger': challenger",
+							"            }",
+							"        };",
+							"        pm.sendRequest(deleteRequest, (err, res) => {",
+							"            if (err) {",
+							"                console.error(`Failed to delete todo with ID: ${todo.id}`, err);",
+							"            } else {",
+							"                console.log(`Deleted todo with ID: ${todo.id}`);",
+							"            }",
+							"        });",
+							"});",
+							"// This part will start after a specified time period - specified at the end of the script.",
+							"setTimeout(function () {",
+							"// GET request setup for later usage.",
+							"    const checkRequest = { ",
+							"        url: 'https://apichallenges.herokuapp.com/todos',",
+							"        method: 'GET',",
+							"        header: {",
+							"            'X-Challenger': challenger",
+							"        }",
+							"    };",
+							"//GET request to check if all todos were deleted.",
+							"    pm.sendRequest(checkRequest, function (err, res) {",
+							"        if (err) {",
+							"            console.error('Failed to fetch todos after deletion', err);",
+							"        } else {",
+							"// If all todos are deleted we run a simple test to confirm that the todos array is - in fact - empty.",
+							"            const remainingTodos = res.json().todos;",
+							"            pm.test('Todos array is empty', function () {",
+							"                pm.expect(remainingTodos.length).to.eql(0);",
+							"            });",
+							"        }",
+							"    });",
+							"}, 5000); //Part of setTimeout. The value to the right determines how much time we give to the first loop to complete deleting all todos before moving on.",
+							"",
+							"//And second test to confirm that the status is 200",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request with script that logs how we did into console",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"let count = 0;\r",
+							"for (let i = 0; i < responseBody.challenges.length; i++) {\r",
+							"    let challenge = responseBody.challenges[i];\r",
+							"    console.log('Challenge:' + challenge.id + '  Status:' + challenge.status);\r",
+							"    if (challenge.status === true) {\r",
+							"        count++;\r",
+							"    }\r",
+							"}\r",
+							"console.log('Number of passed challenges:', count);\r",
+							"console.log(\"If u don't like/need the summary above there's also the mandatory script from homework + it's result below\");\r",
+							"console.log(pm.response.json());\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Challenger",
+						"value": "{{X-Challenger}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apichallenges.herokuapp.com/challenges",
+					"protocol": "https",
+					"host": [
+						"apichallenges",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"challenges"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "X-Challenger",
+			"value": "does not have to be filled in - see 1st request"
+		},
+		{
+			"key": "todoId",
+			"value": "is a variable"
+		},
+		{
+			"key": "todoWrongId",
+			"value": "is a variable"
+		},
+		{
+			"key": "incorrectTodoId",
+			"value": "is a variable",
+			"type": "string"
+		},
+		{
+			"key": "X-Auth-Token",
+			"value": "is a variable",
+			"type": "string"
+		},
+		{
+			"key": "noteValue",
+			"value": "is a variable"
+		}
+	]
+}

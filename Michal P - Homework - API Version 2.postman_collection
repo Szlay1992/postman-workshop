@@ -1,0 +1,694 @@
+{
+	"info": {
+		"_postman_id": "59f2c32b-109c-4449-bf6a-74300b09cfe1",
+		"name": "Homework - API Version 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36967018"
+	},
+	"item": [
+		{
+			"name": "1a. Add new User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let idValue = response.id;\r",
+							"pm.collectionVariables.set(\"id\", idValue); //we save the created users' id as a variable\r",
+							"\r",
+							"pm.test(\"User is created. Status code is 201\", function () { //simple status check test\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"{{$randomFirstName}}\",\r\n        \"email\": \"{{$randomEmail}}\",\r\n        \"gender\": \"male\",\r\n        \"status\": \"active\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1b. Create a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let postIdValue = response.id;\r",
+							"pm.collectionVariables.set(\"postId\", postIdValue); //we save the created posts' id as a variable\r",
+							"\r",
+							"pm.test(\"Post is created. Status code is 201\", function () { //simple status check test\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains id, title, body, and correct user_id\", function () { // test to ensure that the post has all required properties\r",
+							"    pm.expect(response).to.have.property('id');\r",
+							"    pm.expect(response).to.have.property('title');\r",
+							"    pm.expect(response).to.have.property('body');\r",
+							"    pm.expect(response).to.have.property('user_id', pm.collectionVariables.get('id')); \r",
+							"    //above we also verify that user's id matches the one we have saved as variable\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"{{$randomPhrase}}\",\r\n    \"body\": \"{{$randomLoremSentences}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/{{id}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"{{id}}",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Create a comment for a post above",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"// below we save some values from response as variables for later use\r",
+							"let commentIdValue = response.id;\r",
+							"pm.collectionVariables.set(\"commentId\", commentIdValue);\r",
+							"let currentBodyValue = response.body;\r",
+							"pm.collectionVariables.set(\"commentBody\", currentBodyValue);\r",
+							"let commentNameValue = response.name;\r",
+							"pm.collectionVariables.set(\"commentName\", commentNameValue);\r",
+							"let commentEmailValue = response.email;\r",
+							"pm.collectionVariables.set(\"commentEmail\", commentEmailValue);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () { // simple status check test\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"//test below verifies that all required properties are present\r",
+							"pm.test(\"Response contains id, name, email and correct post_id\", function () {\r",
+							"    pm.expect(response).to.have.property('id');\r",
+							"    pm.expect(response).to.have.property('name');\r",
+							"    pm.expect(response).to.have.property('email');\r",
+							"    pm.expect(response).to.have.property('post_id', pm.collectionVariables.get('postId')); \r",
+							"    ////above we also verify that posts's id matches the one we have saved as variable \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"body\": \"{{$randomLoremSentence}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postId}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Edit comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let currentBodyValue = pm.variables.get(\"commentBody\"); // here we get the value of commentBody from previous post request\r",
+							"\r",
+							"pm.test(\"Body value has changed\", function () {\r",
+							"    pm.expect(response.body).to.not.equal(currentBodyValue); // and here we compare it to the new body value\r",
+							"});\r",
+							"console.log('original body: ' + currentBodyValue); // we also log both values, so we can see them and compare manually\r",
+							"console.log('=/=  new body: ' + response.body);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () { // simple status code test\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"commentBody\", response.body); \r",
+							"// lastly we overrride the old body value with the new one we create in this request. We do this to ensure that this test is always valid no matter how many times we run it. Without it we would have kept on comparing changed value to the one created during comment creating in: 2. Create a comment (...).\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{commentName}}\",\r\n    \"email\": \"{{commentEmail}}\",\r\n    \"body\": \"{{$randomLoremSentence}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/comments/{{commentId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"comments",
+						"{{commentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4a. Create 2nd comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"body\": \"{{$randomLoremSentence}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postId}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4b. Create 3rd comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"body\": \"{{$randomLoremSentence}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postId}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4c. Create 4th comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"body\": \"{{$randomLoremSentence}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postId}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4d. Create 5th comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"body\": \"{{$randomLoremSentence}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postId}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4e. Get a list of only 3 comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"pm.test(\"Response has 3 comments\", function () {\r",
+							"    pm.expect(response.length).to.equal(3); // test to confirm that the params work correctly\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () { // simple status code test\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postId}}/comments?per_page=3",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "per_page",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4f. Confirmation that there are more than 3 comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"there are more than 3 comments\", function () { //simple test to check how many items are present in the array\r",
+							"    let idCount = responseBody.length;\r",
+							"    pm.expect(idCount).to.be.above(3);\r",
+							"    console.log('array contains ' + responseBody.length + ' items') // and we log to the consol the number of items present\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () { //yet another status check test\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts/{{postId}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Get data of the (first) created comment, using its id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//test below verifies that all required properties are present\r",
+							"pm.test(\"Response contains id, name, email and correct post_id\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.have.property('id');\r",
+							"    pm.expect(response).to.have.property('name');\r",
+							"    pm.expect(response).to.have.property('email');\r",
+							"    pm.expect(response).to.have.property('post_id', pm.collectionVariables.get('postId')); \r",
+							"    //above we also verify that first posts' id matches the one we get in response.\r",
+							"});\r",
+							"console.log(pm.collectionVariables.get('postId')) // 1st post id gets printed to the console for manual verification if needed."
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/comments/{{commentId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"comments",
+						"{{commentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6b. Delete (first) created comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.text();\r",
+							"let statusCode = pm.response.code;\r",
+							"\r",
+							"// Test to check if status code = 204 OR response body contains 'Resource not found'\r",
+							"pm.test(\"Status code is 204 when comment is deleted or correct error message received if it's already deleted\", function () {\r",
+							"    let statusCheck = (statusCode === 204);\r",
+							"    let messageCheck = (responseBody.includes('Resource not found'));\r",
+							"\r",
+							"    pm.expect(statusCheck || messageCheck).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/comments/{{commentId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"comments",
+						"{{commentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6a. Check if (first) comment was deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"first comment is gone\", () => { //test to verify that the 1st comment id is not present in the response\r",
+							"    let commentPresent = false;\r",
+							"    //// here we loop through all the comments ids from response and compare each one to the 1st comment id.\r",
+							"    for (let i=0; i<response.length; i++) {\r",
+							"        if (response[i].id === pm.collectionVariables.get('commentId')) {\r",
+							"            console.log('found it!');\r",
+							"            commentPresent = true; // value for commentPresent changes to true if we find the id we looking for\r",
+							"        } else {\r",
+							"            console.log(\"haven't found 1st comment, searching...\");\r",
+							"        }\r",
+							"    }\r",
+							"    pm.expect(commentPresent).to.be.false; // The expected value is false. True would mean the comment was not deleted.\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/comments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"comments"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "b4e19910d8f73506480772d603b249f847d8b8ee17a307d2f3ffff6b45d9c8b7",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://gorest.co.in/public/v2",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": ""
+		},
+		{
+			"key": "postId",
+			"value": ""
+		},
+		{
+			"key": "commentId",
+			"value": ""
+		},
+		{
+			"key": "commentBody",
+			"value": ""
+		},
+		{
+			"key": "commentName",
+			"value": ""
+		},
+		{
+			"key": "commentEmail",
+			"value": ""
+		}
+	]
+}
